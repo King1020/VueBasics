@@ -1,28 +1,25 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <!-- 显示路由组件内容 -->
+    <router-view></router-view>
+    <!-- 底部导航隐藏 -->
+    <Footer v-show="$route.meta.isShow" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+// 引入底部导航
+import Footer from './components/FooterGuide/Footer.vue'
 export default {
-  name: 'app',
   components: {
-    HelloWorld
+    Footer
+  },
+  
+  mounted () {
+    // 地址信息
+    this.$store.dispatch('getaddress')
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style lang="stylus" rel="stylesheet/stylus"></style>
