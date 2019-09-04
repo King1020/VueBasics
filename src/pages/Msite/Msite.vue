@@ -78,12 +78,12 @@ export default {
   },
   //计算属性
   computed: {
-    ...mapState(['address_mation', 'food_category', 'user']),
-    // ...mapState({
-    //   address_mation: address_mation => state.msite.address_mation,
-    //   food_category: food_category => state.msite.food_category,
-    //   user: user => state.user.user
-    // }),
+    // ...mapState(['address_mation', 'food_category', 'user']),
+    ...mapState({
+      address_mation: state => state.msite.address_mation,
+      food_category: state => state.msite.food_category,
+      user: state => state.user.user
+    }),
 
     //计算food_category产生一个二维数组
     categoryArr() {

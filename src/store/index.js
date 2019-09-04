@@ -8,9 +8,9 @@ import actions from './actions'
 import getters from './getters'
 import mutations from './mutations'
 //配置对象
-import msite from './modules/msite'
-import shop from './modules/shop'
-import user from './modules/user'
+import msite from './modules/msite.js'
+import shop from './modules/shop.js'
+import user from './modules/user.js'
 //声明使用
 Vue.use(Vuex)
 export default new Vuex.Store({

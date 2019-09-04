@@ -130,9 +130,9 @@
 
 <script>
 //引入接口
-import { reqSendCode, reqPwdLogin,reqSmsLogin } from '../../api'
+import { reqSendCode, reqPwdLogin, reqSmsLogin } from '../../api'
 //引入mutation的常量名
-import {RESE_USER} from '../../store/mutation-type.js'
+import { RESE_USER } from '../../store/mutation-type.js'
 export default {
   data() {
     return {
@@ -188,7 +188,7 @@ export default {
       }
 
       //表单验证是否全部通过
-      const success = await this.$validator.validateAll(names)//通过为true 否则为false
+      const success = await this.$validator.validateAll(names) //通过为true 否则为false
       //登录
       if (success) {
         let result //定义统一变量
@@ -197,12 +197,12 @@ export default {
           result = await reqSmsLogin(phone, code)
         } else {
           //调用用户名接口
-          result = await reqPwdLogin({name, pwd, captcha})
+          result = await reqPwdLogin({ name, pwd, captcha })
         }
         //判断result.code等不等于零
         if (result.code === 0) {
           const user = result.data //拿到用户信息
-          this.$store.commit(RESE_USER,user) //提交
+          this.$store.commit(RESE_USER, user) //提交
           //登录成功 跳转个人中心页面
           this.$router.replace('/profile')
         } else {

@@ -22,7 +22,11 @@ import ShopHeader from '../../components/ShopHeader/ShopHeader.vue'
 export default {
   components: {
     ShopHeader
-  }
+  },
+  //页面加载后发送请求------dispatch（Info）
+  mounted() {
+    this.$store.dispatch('getInfo')
+  },
 }
 </script>
 

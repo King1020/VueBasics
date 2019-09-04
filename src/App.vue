@@ -18,7 +18,7 @@ export default {
   },
 
   async mounted() {
-
+      this.$store.dispatch('getGoods')
     
     // 首页地址信息
     this.$store.dispatch('getaddress')
