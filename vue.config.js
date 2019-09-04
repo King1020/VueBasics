@@ -19,7 +19,7 @@ module.exports = {
          target: 'http://localhost:5000',//目标地址
          changeOrigin: true, //是否跨域
            pathRewrite: {
-             '^/api/':''    
+             '^/api':''    
            },
        },
      }

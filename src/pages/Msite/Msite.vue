@@ -6,7 +6,14 @@
         <i class="iconfont icon-sousuo"></i>
       </span>
       <span class="header_login" slot="right">
-        <span class="header_login_text">登录|注册</span>
+        <!-- 
+          如果用户id存在判断用户名是否存在 
+        存在就显示用户名 不存在就判断用户手机号是否存在 
+        如果用户手机号存在就显示用户手机号
+        不存在就显示 '登录|注册'-->
+        <span
+          class="header_login_text"
+        >{{user._id?(user.name?(user.name):(user.phone?(user.phone):('登录|注册'))):('登录|注册')}}</span>
       </span>
     </Header>
     <!--首页导航-->
@@ -14,10 +21,15 @@
       <div class="swiper-container">
         <div class="swiper-wrapper">
           <div class="swiper-slide" v-for="(food_category,index) in categoryArr" :key="index">
-            <a href="javascript:" class="link_to_food" v-for='(category,index) in food_category' :key='index'>
+            <a
+              href="javascript:"
+              class="link_to_food"
+              v-for="(category,index) in food_category"
+              :key="index"
+            >
               <div class="food_container">
                 <!-- 图片在线路径 -->
-                <img :src="`https://fuss10.elemecdn.com`+category.image_url"/>
+                <img :src="`https://fuss10.elemecdn.com`+category.image_url" />
               </div>
               <span>{{category.title}}</span>
             </a>
@@ -50,24 +62,29 @@ export default {
     this.$store.dispatch('getshops')
 
     //获取食品分类信息---vuex 中
-    this.$store.dispatch('getcategory',()=>{
-      this.$nextTick(()=>{//下次dom更新之前
-          /* eslint-disable no-new */
-    new Swiper('.swiper-container', {
-      loop: true, // 循环模式选项
-      // 如果需要分页器
-      pagination: {
-        el: '.swiper-pagination'
-      }
+    this.$store.dispatch('getcategory', () => {
+      this.$nextTick(() => {
+        //下次dom更新之前
+        /* eslint-disable no-new */
+        new Swiper('.swiper-container', {
+          loop: true, // 循环模式选项
+          // 如果需要分页器
+          pagination: {
+            el: '.swiper-pagination'
+          }
+        })
+      })
     })
-   })
- })
-
-  
   },
   //计算属性
   computed: {
-    ...mapState(['address_mation', 'food_category']),
+    ...mapState(['address_mation', 'food_category', 'user']),
+    // ...mapState({
+    //   address_mation: address_mation => state.msite.address_mation,
+    //   food_category: food_category => state.msite.food_category,
+    //   user: user => state.user.user
+    // }),
+
     //计算food_category产生一个二维数组
     categoryArr() {
       const { food_category } = this

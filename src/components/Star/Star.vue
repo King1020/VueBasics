@@ -22,7 +22,7 @@ export default {
         ShopArr.push('on')
       }
       //计算半个星星
-      if (score * 10 - scoreLi * 10 >= 5) {
+      if (score - scoreLi >= 0.5) {
         ShopArr.push('half')
       }
       while (ShopArr.length < 5) {

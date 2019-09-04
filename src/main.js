@@ -11,6 +11,12 @@ import store from './store'
 import Header from './components/Header/Header.vue'
 //引入Star组件注册全局组件 
 import Star from './components/Star/Star.vue'
+// 引入validate.js文件
+import './mock/mock.server.js'
+//引入mintUI的button
+import { Button } from 'mint-ui';
+//注册全局button组件
+Vue.component(Button.name, Button);
 // 注册Header全局路由
 Vue.component('Header', Header)
 // 注册Star全局路由
@@ -20,10 +26,8 @@ Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  components: {
-    App
-  },
+  components: { App},
   template: '<App/>',
   router, //注册仓库
-  store //状态
+  store, //状态
 })

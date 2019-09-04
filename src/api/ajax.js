@@ -1,6 +1,6 @@
 import axios from 'axios'
 export default function ajax (url, data = {}, method = 'GET') {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve,) => {
     let promise
     // 执行异步ajax请求
     if (method === 'GET') {

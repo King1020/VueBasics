@@ -2,17 +2,21 @@
   <section class="profile">
     <Header title="我的" />
     <section class="profile-number">
-      <a href="javascript:" class="profile-link" @click="$router.push('/login')">
+      <a
+        href="javascript:"
+        class="profile-link"
+        @click="user._id?($router.push('/userinfo')):($router.push('/login'))"
+      >
         <div class="profile_image">
           <i class="iconfont icon-person"></i>
         </div>
         <div class="user-info">
-          <p class="user-info-top">登录/注册</p>
-          <p>
+          <p v-if="!user.phone" class="user-info-top">{{user.name?user.name:'登录/注册'}}</p>
+          <p v-if="!user.name">
             <span class="user-icon">
               <i class="iconfont icon-shouji icon-mobile"></i>
             </span>
-            <span class="icon-mobile-number">暂无绑定手机号</span>
+            <span class="icon-mobile-number">{{user.phone?user.phone:'暂无绑定手机号'}}</span>
           </p>
         </div>
         <span class="arrow">
@@ -94,16 +98,38 @@
         </div>
       </a>
     </section>
+    <section class="profile_my_order border-1px">
+      <!-- 退出按钮 -->
+      <mt-button v-show="user._id" style="width:100%" type="danger" @click="loginOff">退出登录</mt-button>
+    </section>
   </section>
 </template>
 <script>
-export default {}
+import { mapState } from 'vuex'
+//引入退出提示
+import { MessageBox } from 'mint-ui'
+export default {
+  computed: {
+    ...mapState(['user'])
+    // ...mapState({
+    //  user:state=>state.user.user
+    // })
+  },
+  methods: {
+    //退出登录
+    loginOff() {
+      MessageBox.confirm('确定退出登录嘛?').then(action => {
+        this.$store.dispatch('clearUser') //更新state 清除用户信息
+      })
+    }
+  }
+}
 </script>
 <style lang="stylus" rel="stylesheet/stylus">
-@import "../../common/stylus/mixins.styl"
+@import '../../common/stylus/mixins.styl'
 .profile // 我的
   width 100%
-  //一像素上边框
+  // 一像素上边框
   top-border-1px(#f1f1f1)
   .profile-number
     margin-top 45.5px

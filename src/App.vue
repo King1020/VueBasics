@@ -10,14 +10,25 @@
 <script>
 // 引入底部导航
 import Footer from './components/FooterGuide/Footer.vue'
+import { reqUseInfo } from './api'
+import {RESE_USER} from './store/mutation-type.js'
 export default {
   components: {
     Footer
   },
-  
-  mounted () {
-    // 地址信息
+
+  async mounted() {
+
+    
+    // 首页地址信息
     this.$store.dispatch('getaddress')
+
+    //调用接口
+    const result = await reqUseInfo()
+    if (result.code === 0) {
+      const user =result.data
+      this.$store.commit(RESE_USER,user)
+    }
   }
 }
 </script>
