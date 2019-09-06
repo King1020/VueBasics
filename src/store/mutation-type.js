@@ -22,3 +22,9 @@ export const RECEIVE_GOODS = 'receive_goods'
 export const RECEIVE_RATINGS = 'receive_ratings'
 // 商家的数据
 export const RECEIVE_INFO = 'receive_info'
+
+
+//增加
+export const Add_FOOD ='add_food'
+//减少
+export const REDUX_FOOD ='redux_food'

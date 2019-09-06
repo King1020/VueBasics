@@ -1,7 +1,9 @@
 import {
   RECEIVE_GOODS,
   RECEIVE_RATINGS,
-  RECEIVE_INFO
+  RECEIVE_INFO,
+  Add_FOOD,
+  REDUX_FOOD
 } from '../mutation-type'
 //引入api相关接口
 import {
@@ -9,6 +11,8 @@ import {
   reqGoods,
   reqInfo
 } from '../../api'
+//引入vue
+import Vue from 'vue'
 const state = {
   //点餐数据
   goods: [],
@@ -35,6 +39,30 @@ const mutations = {
     info
   }) {
     state.info = info
+  },
+  //增加food的count
+  [Add_FOOD](state, {
+    food
+  }) {
+    // 判断当前的count是否有值
+    if (!food.count) {
+      // 没有值
+      // food.count = 1
+      //使用Vue.set 变为响应式数据
+      Vue.set(food, "count", 1)
+    } else {
+      // 有值
+      food.count++
+    }
+  },
+  //减少food的count
+  [REDUX_FOOD](state, {
+    food
+  }) {
+    //如果food.count的值大于0就可减
+    if (food.count > 0) {
+      food.count--
+    }
   }
 }
 const actions = {
@@ -71,6 +99,27 @@ const actions = {
       const info = result.data
       commit(RECEIVE_INFO, {
         info
+      })
+    }
+  },
+
+  //更新food的count数据
+  updateFood({
+    commit
+  }, {
+    isAdd,
+    food
+  }) {
+    //判断isAdd是true还是false ，true--增加  false--减少
+    if (isAdd) {
+      //增加
+      commit(Add_FOOD, {
+        food
+      })
+    } else {
+      //减少
+      commit(REDUX_FOOD, {
+        food
       })
     }
   }

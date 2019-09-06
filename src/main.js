@@ -15,8 +15,12 @@ import Star from './components/Star/Star.vue'
 import './validate.js'
 //引入拦截
 import './mock/mock.server.js'
+//引入CartControl组件
+import CartControl from './components/CartControl/CartControl.vue'
 //引入mintUI的button
-import { Button } from 'mint-ui';
+import {Button} from 'mint-ui';
+//注册全局CartControl组件
+Vue.component('CartControl', CartControl);
 //注册全局button组件
 Vue.component(Button.name, Button);
 // 注册Header全局路由
@@ -28,7 +32,9 @@ Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  components: { App},
+  components: {
+    App
+  },
   template: '<App/>',
   router, //注册仓库
   store, //状态
