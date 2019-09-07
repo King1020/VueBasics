@@ -4,48 +4,113 @@
       <div class="content">
         <div class="content-left">
           <div class="logo-wrapper">
-            <div class="logo highlight">
-              <i class="iconfont icon-shopping_cart highlight"></i>
+            <div class="logo" :class="{highlight:totalCount}" @click="clearCart">
+              <i class="iconfont icon-shopping_cart" :class="{highlight:totalCount}"></i>
             </div>
-            <div class="num">1</div>
+            <div class="num" v-show="totalCount">{{totalCount}}</div>
           </div>
-          <div class="price highlight">￥10</div>
-          <div class="desc">另需配送费￥4元</div>
+          <div class="price" :class="{highlight:totalCount}">￥{{totalPrice}}</div>
+          <div class="desc">另需配送费￥{{info.deliveryPrice}}元</div>
         </div>
         <div class="content-right">
-          <div class="pay not-enough">还差￥10元起送</div>
+          <div class="pay" :class="payKing">{{payContent}}</div>
         </div>
       </div>
-      <div class="shopcart-list" style="display: none;">
+      <div class="shopcart-list" v-show="listkk">
         <div class="list-header">
           <h1 class="title">购物车</h1>
           <span class="empty">清空</span>
         </div>
         <div class="list-content">
           <ul>
-            <li class="food">
-              <span class="name">红枣山药糙米粥</span>
+            <li class="food" v-for="(food,index) in foodArr " :key="index">
+              <span class="name">{{food.name}}</span>
               <div class="price">
-                <span>￥10</span>
+                <span>￥{{food.price}}</span>
               </div>
               <div class="cartcontrol-wrapper">
-                <div class="cartcontrol">
-                  <div class="iconfont icon-remove_circle_outline"></div>
-                  <div class="cart-count">1</div>
-                  <div class="iconfont icon-add_circle"></div>
-                </div>
+                <CartControl :food="food" />
               </div>
             </li>
           </ul>
         </div>
       </div>
     </div>
-    <div class="list-mask" style="display: none;"></div>
+    <!-- 遮挡层 -->
+    <div class="list-mask" v-show="listkk" @click="clearCart"></div>
   </div>
 </template>
 
 <script>
-export default {}
+import { mapState, mapGetters } from 'vuex'
+//引入滑动
+import BScroll from 'better-scroll'
+export default {
+  data() {
+    return {
+      isCart: false
+    }
+  },
+  methods: {
+    //点击 遮罩层和购物车logo 显示隐藏购物车内容
+    clearCart() {
+      this.isCart = !this.isCart
+    }
+  },
+  computed: {
+    ...mapState({
+      foodArr: state => state.shop.foodArr, //食物数据
+      info: state => state.shop.info //商家信息
+    }),
+    //食物总数量和食物总价格
+    ...mapGetters(['totalCount', 'totalPrice']),
+    //高亮显示
+    payKing() {
+      //总价格
+      const { totalPrice } = this
+
+      //起送价格
+      const { minPrice } = this.info
+      //样式 enough not-enough
+      return totalPrice < minPrice ? 'not-enough' : 'enough'
+    },
+    //文本内容
+    payContent() {
+      //总价格
+      const { totalPrice } = this
+      //起送价格
+      const { minPrice } = this.info
+      if (totalPrice === 0) {
+        return ` ￥${minPrice}元起送`
+      } else if (totalPrice < minPrice) {
+        return `还差￥${minPrice - totalPrice}元起送`
+      } else {
+        return '去结算'
+      }
+    },
+    //计算属性listkk
+    listkk() {
+      //先判断总数量是否零
+      const { totalCount } = this
+      if (totalCount === 0) {
+        this.isCart = false
+        return false
+      }
+      this.$nextTick(() => {
+        //单例模式
+        if (!this.scroll) {
+          let scroll = new BScroll('.list-content', {
+            click: true //全局点击事件开启
+          })
+        }else{
+          //再次刷新数据对象以保证滑动正常
+          this.scroll.refresh()
+        }
+      })
+      return this.isCart
+    }
+  }
+}
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
@@ -142,6 +207,7 @@ export default {}
     top 0
     z-index -1
     width 100%
+    transform translateY(-100%)
     .list-header
       height 40px
       line-height 40px

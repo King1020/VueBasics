@@ -24,9 +24,8 @@
                 class="food-item bottom-border-1px"
                 v-for="(food,index) in good.foods"
                 :key="index"
-              
+                 @click="showFood(food)"
               >  
-              <!-- @click="showFood(food)" -->
                 <div class="icon">
                   <img width="57" height="57" :src="food.icon" />
                 </div>
@@ -51,9 +50,9 @@
         </ul>
       </div>
       <!--购物车的组件的调用-->
-      <!-- <ShopCart /> -->
+      <ShopCart />
     </div>
-    <!-- <Food :food="food" ref="food" /> -->
+    <Food :food="food" ref="food" />
   </div>
 </template>
 <script>
@@ -65,6 +64,7 @@ import { mapState } from 'vuex'
 // 引入BScroll插件
 import BScroll from 'better-scroll'
 export default {
+  //注册
   components: {
     Food,
     ShopCart
@@ -73,7 +73,7 @@ export default {
     return {
       scrollY: 0, // 纵向滑动的值
       tops: [], // 分类的li的总高度间隔值
-      // food: {} // 用来向Food组件中传入数据
+      food: {} // 向Food组件中传入数据
     }
   },
   async mounted() {
@@ -104,7 +104,7 @@ export default {
         // 左侧的列表向上滑动
         this.scrollLeft.scrollToElement(li, 300)
       }
-      // console.log(index);
+      // 返回索引
       return index
     }
   },
@@ -154,11 +154,11 @@ export default {
       this.scrollRight.scrollTo(0, -scrollY, 300)
     },
     // 显示Food组件
-    // showFood(food) {
-    //   this.$refs.food.closeFood()
-    //   // 更新food数据
-    //   this.food = food
-    // }
+    showFood(food) {
+      this.$refs.food.coeFood()
+      // 更新food数据
+      this.food = food
+    }
   }
 }
 </script>

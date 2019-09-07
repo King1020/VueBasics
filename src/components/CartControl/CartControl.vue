@@ -2,17 +2,18 @@
   <div class="cartcontrol">
     <!-- 减 -->
     <transition name='king'>
+      <!-- stop阻止事件冒泡 -->
     <div
       class="iconfont icon-remove_circle_outline"
       v-show="food.count>0"
-      @click="updateFood(false)"
+      @click.stop="updateFood(false)"
     ></div>
     </transition>
     <!-- 数量 -->
     <div class="cart-count" v-show="food.count>0">{{food.count}}</div>
     <!-- 加 -->
-
-    <div class="iconfont icon-add_circle" @click="updateFood(true)"></div>
+   <!-- stop阻止事件冒泡 -->
+    <div class="iconfont icon-add_circle" @click.stop="updateFood(true)"></div>
   </div>
 
 </template>

@@ -19,7 +19,10 @@ const state = {
   //评价数据
   evaluate: {},
   //商家数据
-  info: []
+  info: [],
+  //食物对象 购物车中的对象
+  foodArr: []
+
 }
 const mutations = {
   //更新点餐数据
@@ -47,9 +50,10 @@ const mutations = {
     // 判断当前的count是否有值
     if (!food.count) {
       // 没有值
-      // food.count = 1
       //使用Vue.set 变为响应式数据
       Vue.set(food, "count", 1)
+      //把food对象添加到数组中
+      state.foodArr.push(food)
     } else {
       // 有值
       food.count++
@@ -62,6 +66,10 @@ const mutations = {
     //如果food.count的值大于0就可减
     if (food.count > 0) {
       food.count--
+      //判断当前的食物数量是不是0,才能删除食物
+      if (food.count === 0) {
+        state.foodArr.splice(state.foodArr.indexOf(food), 1) //indexOf:根据对象获取索引值
+      }
     }
   }
 }
@@ -124,7 +132,17 @@ const actions = {
     }
   }
 }
-const getters = {}
+const getters = {
+  //计算食物总数量
+  totalCount(state) {
+    return state.foodArr.reduce((pre, food) => pre + food.count, 0)
+  },
+
+  //计算总价格
+  totalPrice(state) {
+    return state.foodArr.reduce((pre, food) => pre + food.count * food.price, 0)
+  }
+}
 
 
 
