@@ -11,6 +11,8 @@ import store from './store'
 import Header from './components/Header/Header.vue'
 //引入Star组件注册全局组件 
 import Star from './components/Star/Star.vue'
+//引入Split组件注册全局组件
+import Split from './components/Split/Split.vue'
 // 引入validate.js文件
 import './validate.js'
 //引入拦截
@@ -19,6 +21,8 @@ import './mock/mock.server.js'
 import CartControl from './components/CartControl/CartControl.vue'
 //引入mintUI的button
 import {Button} from 'mint-ui';
+//注册全局Split组件
+Vue.component('Split', Split);
 //注册全局CartControl组件
 Vue.component('CartControl', CartControl);
 //注册全局button组件

@@ -141,7 +141,13 @@ const getters = {
   //计算总价格
   totalPrice(state) {
     return state.foodArr.reduce((pre, food) => pre + food.count * food.price, 0)
-  }
+  },
+  /*
+  总商家评论数
+   */
+  totalRatingsCount(state) {
+    return state.ratings.length
+  },
 }
 
 

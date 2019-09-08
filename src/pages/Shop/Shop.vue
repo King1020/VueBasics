@@ -26,7 +26,7 @@ export default {
   //页面加载后发送请求------dispatch（Info）
   mounted() {
     this.$store.dispatch('getInfo')
-  },
+  }
 }
 </script>
 

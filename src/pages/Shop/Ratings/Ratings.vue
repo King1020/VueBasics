@@ -1,33 +1,34 @@
 <template>
   <div class="ratings">
     <div class="ratings-content">
-      <div class="overview"> 
+      <div class="overview">
         <div class="overview-left">
-          <h1 class="score">4.5</h1>
+          <h1 class="score">{{info.score}}</h1>
           <div class="title">综合评分</div>
-          <div class="rank">高于周边商家90%</div>
+          <div class="rank">高于周边商家{{info.sellCount}}%</div>
         </div>
         <div class="overview-right">
           <div class="score-wrapper">
             <span class="title">服务态度</span>
-            <div>Star组件</div>
-            <span class="score">4.4</span>
+            <!-- Star组件-->
+            <Star :score="info.serviceScore" :size="36" />
+            <span class="score">{{info.serviceScore}}</span>
           </div>
           <div class="score-wrapper">
             <span class="title">商品评分</span>
-            <div>Star组件</div>
-            <span class="score">4.6</span>
+            <Star :score="info.serviceScore" :size="36" />
+            <span class="score">{{info.foodScore}}</span>
           </div>
           <div class="delivery-wrapper">
             <span class="title">送达时间</span>
-            <span class="delivery">30分钟</span>
+            <span class="delivery">{{info.deliveryTime}}分钟</span>
           </div>
         </div>
       </div>
 
-      <div class="split"></div>
-
-      <div>RatingSelect组件</div>
+      <Split />
+      <!-- <RatingsFliter /> -->
+      <!-- <div>RatingSelect组件</div> -->
 
       <div class="rating-wrapper">
         <ul>
@@ -59,7 +60,18 @@
 </template>
 
 <script>
-export default {}
+import { mapState } from 'vuex'
+//引入RatingSelect组件
+// import RatingsFliter from '../../../components/RatingsFliter/RatingsFilter.vue'
+
+export default {
+  computed: {
+    ...mapState({
+      info: state => state.shop.info,
+      ratings: state => state.shop.ratings
+    })
+  }
+}
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
